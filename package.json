@@ -1,0 +1,32 @@
+{
+  "name": "url-builder",
+  "version": "0.0.1",
+  "description": "Url Builder",
+  "main": "urlBuilder.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hasnain-Haider/url-builder.git"
+  },
+  "keywords": [
+    "url",
+    "uri",
+    "builder",
+    "generator",
+    "factory",
+    "assembler",
+    "creator",
+    "link"
+  ],
+  "author": "Hasnain Haider",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hasnain-Haider/url-builder/issues"
+  },
+  "homepage": "https://github.com/Hasnain-Haider/url-builder#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}
