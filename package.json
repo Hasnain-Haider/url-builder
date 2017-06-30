@@ -1,19 +1,20 @@
 {
-  "name": "url-builder",
+  "name": "url-buildr",
   "version": "0.0.1",
   "description": "Url Builder",
-  "main": "urlBuilder.js",
+  "main": "url-buildr.js",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hasnain-Haider/url-builder.git"
+    "url": "git+https://github.com/Hasnain-Haider/url-buildr.git"
   },
   "keywords": [
+    "underscore",
     "url",
     "uri",
-    "builder",
+    "buildr",
     "generator",
     "factory",
     "assembler",
@@ -23,9 +24,9 @@
   "author": "Hasnain Haider",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Hasnain-Haider/url-builder/issues"
+    "url": "https://github.com/Hasnain-Haider/url-buildr/issues"
   },
-  "homepage": "https://github.com/Hasnain-Haider/url-builder#readme",
+  "homepage": "https://github.com/Hasnain-Haider/url-buildr#readme",
   "dependencies": {
     "underscore": "^1.8.3"
   }
