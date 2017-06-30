@@ -20,7 +20,7 @@ class URLBuilder {
     }
   }
 
-/*************************  Constructor Helper  *****************************/
+  /*************************  Constructor Helper  *****************************/
   _buildOptions(options) {
     _.defaults(options, defaultOptions);
     var url = `${options.prefix}${options.host}`;
@@ -66,16 +66,16 @@ class URLBuilder {
   }
 
   /************************ Private Instance Methods ***************************/
-    _build() {
-      if (!this.isBuilt) {
-        this
-        ._buildAdditions()
-        ._buildParams()
-        ._buildQueries();
-        this.isBuilt = true;
-      }
-      return this;
+  _build() {
+    if (!this.isBuilt) {
+      this
+      ._buildAdditions()
+      ._buildParams()
+      ._buildQueries();
+      this.isBuilt = true;
     }
+    return this;
+  }
 
   _buildAdditions() {
     _.each(this.additions, (addition) => {
