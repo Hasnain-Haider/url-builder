@@ -1,8 +1,8 @@
 {
-  "urlPrefix": null,
+  "pathPrefix": "",
   "host": "",
   "prefix": "",
   "additions": [],
   "queries": [],
   "params": []
-};
+}
