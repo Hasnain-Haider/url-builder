@@ -176,8 +176,10 @@ class URLBuildr {
   * @param {string} val -  The value to give to the field
   * @returns this
   */
-  set(opt, val) {
-    this.options[opt] = val;
+  set(opts) {
+    _.each(_.keys(opts), (option) => {
+      this.options[option] = opts[option];
+    });
     this.isBuilt = false;
     return this;
    }

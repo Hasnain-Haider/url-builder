@@ -84,15 +84,13 @@ Assign a value to a given options field
 
 **Parameters**
 
-**opt**: `string`, the field of options to reassign
-
-**val**: `string`, The value to give to the field
+**opts**: `object`, set fields in the options object of "this"
 
 **Returns**: this
 
 #### URLBuildr.setOptions - overwrite the entire options object(options)
 
-Assigns a value to options
+Overwrites the entire options object of "this"
 
 **Parameters**
 
