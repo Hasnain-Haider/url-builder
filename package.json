@@ -1,6 +1,6 @@
 {
   "name": "url-buildr",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Url Builder",
   "main": "url-buildr.js",
   "scripts": {
