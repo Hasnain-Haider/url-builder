@@ -8,9 +8,9 @@ An NPM package:
 
 Quickly assemble routes and urls. Can be used for a variety of purposes like
 
-* route generation
-* api testing
-* webcrawling/scraping
+* Route Generation
+* API testing
+* Webcrawling/scraping
 * etc.
 
 _____________________________________________
@@ -22,20 +22,20 @@ There are two ways to use this module
     * **Some features are disabled in this method**
     * the URLs are generated with object chaining
 
-```
+```javascript
   options = {
     prefix: (string),
     pathPrefix: (string),
     additions: (string|string[]),
     port: (integer|string),
     host: (string),
-    params: (string[]|object),    // [key1,val1,key2,val2] OR {key1:val1,key2:val2}
+    params: (string[]|object),    // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
     queries: (string[]|object)    // (Same as above)
     }
 ```
   _____________________________________________
 
-  ### Examples
+### Examples
   Here's a quick example showing the first way
   ```javascript
   ub = new UB({
@@ -74,7 +74,7 @@ Assign a value to a given options field
 
 **Parameters**
 
-**opt**: `object|string`, the field of option to reassign
+**opt**: `object|string`, { options } OR the initial URL
 
 **Returns**: this
 
@@ -84,7 +84,7 @@ Assign a value to a given options field
 
 **Parameters**
 
-**opt**: `string`, the field of option to reassign
+**opt**: `string`, the field of options to reassign
 
 **val**: `string`, The value to give to the field
 
@@ -96,7 +96,7 @@ Assigns a value to options
 
 **Parameters**
 
-**options**: `object`, Creates an object to create urls
+**options**: `object`, Object containing configurations for the url
 
 **Returns**: this
 
@@ -106,8 +106,9 @@ Adds to url path, after the prefix, host, port and pathPrefix
 
 **Parameters**
 
-**params**: `string | string | Array.&lt;string&gt;`, Creates an object to create urls
+**params**: `string|...string|string[]`, Creates an object to create urls
 
+**Returns**: this
 
 #### URLBuildr.param - fills in parameters(params)
 
@@ -115,8 +116,19 @@ Fills in parameters in the url if they are present
 
 **Parameters**
 
-**params**: `iterable`, Creates an object to create urls
+**params**: `string[]|...string|object`, pass a string array, object, or several strings
 
+**Returns**: this
+
+##### Examples:
+```javascript
+ub.param([key1, val1, key2, val2]);
+ub.param(key1, val1, key2, val2);
+ub.param({
+    key1: val1,
+    key2: val2
+});
+```
 
 #### URLBuildr.query - fills in parameters(params)
 
@@ -124,8 +136,9 @@ Insert query strings at the end of the url
 
 **Parameters**
 
-**params**: `iterable`, Creates an object to create urls
+**params**: `string[]|..string|object`, pass a string array, object, or several strings
 
+**Returns**: this
 
 #### URLBuildr.clear - reset the Objects options()
 
