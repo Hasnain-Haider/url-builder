@@ -7,24 +7,28 @@ const _ = require('underscore');
 const defaultOptions = require('./defaults.json');
 
 /**
-*
+* @typedef {...string|object|string[]} iterable
 * @param {object|string} initializer
 * @param {string} initializer.prefix - Goes at the very begining of the URL, before host
 * @param {string} initializer.host - hostname of the network
 * @param {string|number} initializer.port - port of the network
 * @param {string} initializer.pathPrefix - is the very first part of the path. Appears after the host and port
-
 * @param {string[]} initializer.additions - segments to add on to the path to add after the prefix
 * @param {object|string[]} initializer.params - parameters that are present in the url and the values
 * @param {object|string[]} initializer.queries - url queries that appended at the end
 */
 
-class URLBuilder {
+/**
+* URLBuildr
+* @namespace
+* @class
+*/
+class URLBuildr {
 /**
 * Creates an object to create urls
 * @constructor
-* @param {string} initializer - if a string is passed, the urlString is set to it
-* @param {object} initializer - if an object is passed, the url is immediately built based on the initializer's values
+* @param {string|object} initializer - if a string is passed, the urlString is set to it
+  - if an object is passed, the url is immediately built based on the initializer's values
 */
   constructor(initializer) {
     this.urlString = '';
@@ -38,29 +42,33 @@ class URLBuilder {
 
     let initype = typeof initializer;
     if (initype === 'string') {
-      this.urlString = URLBuilder._sanitizeString(initializer);
+      this.urlString = URLBuildr._sanitizeString(initializer);
       this.options.host = this.urlString;
       initializer = {};
     } else {
       this._initOptions(initializer);
     }
   }
-/**  @function _initOptions - assemble the url using the objects properties */
+
+  /** @function URLBuildr~_initOptions - assemble the url using the objects properties */
   _initOptions(_options) {
     var prePath = this.options.pathPrefix || {}
     this.options = _.defaults(_options, defaultOptions);
-    this.options.pathPrefix = URLBuilder._sanitizeString(this.options.pathPrefix);
+    this.options.pathPrefix = URLBuildr._sanitizeString(this.options.pathPrefix);
     this._initArrays();
   }
 
+  /** @function URLBuildr~_initArrays*/
   _initArrays() {
     var options = this.options;
     this.additions = options.additions;
-    this.queries   = URLBuilder._accumulate(options.queries);
-    this.params    = URLBuilder._accumulate(options.params);
+    this.queries   = URLBuildr._accumulate(options.queries);
+    this.params    = URLBuildr._accumulate(options.params);
     return this;
   }
 
+/**
+* @function URLBuildr~_buildBaseUrl */
   _buildBaseUrl() {
     var options = this.options;
     if(options.host) {
@@ -73,7 +81,10 @@ class URLBuilder {
     return this;
   }
 
-/** @function _sanitizeString - remove the first and last characters if they are '/' */
+  /**
+  * @function URLBuildr~_sanitizeString - remove the first and last characters if they are '/'
+  * @memberof URLBuildr
+  */
   static _sanitizeString(str) {
     if (!str) return str;
     if(_.last(str) === '/') {
@@ -85,12 +96,11 @@ class URLBuilder {
     return str;
   }
 
-/**
-*
-* @function _accumulate - create an array of subarrays (of length 2) from an object
-* @param {...string|object|string[]} iterable - can be an object, array or variadric argument
-* @return {array[]}
-*/
+  /**
+  * @function URLBuildr._accumulate - create an array of subarrays (of length 2) from an object
+  * @param {iterable} iterable - can be an object, array or variadric argument
+  * @return {array[]}
+  */
   static _accumulate(...iterable) {
     var result = [];
     var firstArg = _.first(iterable);
@@ -112,7 +122,7 @@ class URLBuilder {
     return result;
   }
 
-
+ /** @function URLBuildr~_build - finally assemble the URLs fragments */
   _build() {
     if (!this.isBuilt) {
       this
@@ -125,7 +135,7 @@ class URLBuilder {
     return this;
   }
 
-/** @function _buildAdditions - add path segments to urlString */
+ /** @function URLBuildr~_buildAdditions - add path segments to urlString */
   _buildAdditions() {
     _.each(this.additions, (addition) => {
       this.urlString += `/${addition}`;
@@ -133,7 +143,7 @@ class URLBuilder {
     return this;
   }
 
-  /** @function _buildparams - fills in paraeters in urlString */
+  /** @function URLBuildr~_buildparams - fills in paraeters in urlString  */
   _buildParams() {
     _.each(this.params, (pair) => {
       const regex = new RegExp(':' + _.first(pair) + '(?=[/\0])')
@@ -142,7 +152,10 @@ class URLBuilder {
     return this;
   }
 
-  /** @function _buildparams - generates a queryString at the end f urlString */
+  /**
+  * @function URLBuildr~_buildparams - generates a queryString at the end of urlString
+  * @returns this
+  */
   _buildQueries() {
     _.each(this.queries, (query) => {
       var queryString = _.first(query) + '=' + _.last(query);
@@ -157,53 +170,72 @@ class URLBuilder {
     return this;
   }
 
-  setUrl(str) {
-    this.urlString = str;
-    return this;
-  }
-
+  /**
+  * @function URLBuildr#set - reassign a property of options
+  * @param {string} opt - the field of option to reassign
+  * @param {string} val -  The value to give to the field
+  * @returns this
+  */
   set(opt, val) {
     this.options[opt] = val;
     this.isBuilt = false;
     return this;
    }
 
+  /**
+  * @function URLBuildr#setOptions - overwrite the entire options object
+  * @param {object} options
+  * @returns this
+  */
   setOptions(options) {
     this.options = options;
     this.isBuilt = false;
     return this;
   }
 
+  /**
+  * @function URLBuildr#add - fills in parameters
+  * @param {...string|string|string[]} params
+  */
   add(...str) {
     _.each(str, (string) => {
-      this.additions = this.additions.concat(URLBuilder._sanitizeString(string));
+      this.additions = this.additions.concat(URLBuildr._sanitizeString(string));
     });
     return this;
   }
 
+  /**
+  * @function URLBuildr#param - fills in parameters
+  * @param {iterable} params
+  */
   param(...params) {
-    this.params = this.params.concat(URLBuilder._accumulate(...params));
+    this.params = this.params.concat(URLBuildr._accumulate(...params));
     return this;
   }
 
+  /**
+  * @function URLBuildr#query - fills in parameters
+  * @param {iterable} params
+  */
   query(...queries) {
-    this.queries = this.queries.concat(URLBuilder._accumulate(...queries));
+    this.queries = this.queries.concat(URLBuildr._accumulate(...queries));
     return this;
   }
 
-  /** @function clear - reset the Objects options */
-  clear(){
+  /** @function URLBuildr#clear - reset the Objects options */
+  clear() {
     _.each(defaultOptions, opt => {
       this.options[opt] = defaultOptions[opt];
     })
   }
 
+  /**
+  * @function URLBuildr#toString
+  * @returns {string} urlString
+  */
   toString() {
     return this._build().urlString;
   }
-
-  // @TODO create host() pathPrefix() port() etc
-
 }
 
-module.exports = URLBuilder;
+module.exports = URLBuildr;
