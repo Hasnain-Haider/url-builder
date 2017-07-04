@@ -15,10 +15,7 @@ ub = new UB({
 });
 
 console.log(ub.toString());
-// ub.set('host', 'google.co.uk');
-ub.set({
-  host: 'google.co.uk'
-});
+ub.set({ host: 'google.co.uk'});
 console.log(ub.toString());
 ub.set({port: 3542});
 console.log(ub.toString());

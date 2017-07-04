@@ -31,7 +31,7 @@ There are two ways to use this module
     host: (string),
     params: (string[]|object),    // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
     queries: (string[]|object)    // (Same as above)
-    }
+  }
 ```
   _____________________________________________
 
@@ -68,19 +68,17 @@ _____________________________________________
 ### Class: URLBuildr
 Creates an object to create urls
 
-#### URLBuildr.constructor - reassign a property of options(opt, val)
-
-Assign a value to a given options field
+### URLBuildr.constructor(initializer)
 
 **Parameters**
 
-**opt**: `object|string`, { options } OR the initial URL
+**initializer**: `object|string`, { options } OR the initial URL
 
 **Returns**: this
 
-#### URLBuildr.set - reassign a property of options(opt, val)
+### URLBuildr.set(opt)
 
-Assign a value to a given options field
+Assign a value to the given options field
 
 **Parameters**
 
@@ -88,7 +86,9 @@ Assign a value to a given options field
 
 **Returns**: this
 
-#### URLBuildr.setOptions - overwrite the entire options object(options)
+e.g. `ub.set({host: 3000})`
+
+### URLBuildr.setOptions(options)
 
 Overwrites the entire options object of "this"
 
@@ -98,17 +98,19 @@ Overwrites the entire options object of "this"
 
 **Returns**: this
 
-#### URLBuildr.add - fills in parameters(params)
+### URLBuildr.add(paths)
 
 Adds to url path, after the prefix, host, port and pathPrefix
 
 **Parameters**
 
-**params**: `string|...string|string[]`, Creates an object to create urls
+**paths**: `...string|string[]`, Creates an object to create urls
 
 **Returns**: this
 
-#### URLBuildr.param - fills in parameters(params)
+e.g. `ub.add('accounts', 'users')` || `ub.add(['accounts', 'users'])`
+
+### URLBuildr.param(params)
 
 Fills in parameters in the url if they are present
 
@@ -118,7 +120,7 @@ Fills in parameters in the url if they are present
 
 **Returns**: this
 
-##### Examples:
+e.g.
 ```javascript
 ub.param([key1, val1, key2, val2]);
 ub.param(key1, val1, key2, val2);
@@ -128,20 +130,20 @@ ub.param({
 });
 ```
 
-#### URLBuildr.query - fills in parameters(params)
+#### URLBuildr.query(query)
 
 Insert query strings at the end of the url
 
 **Parameters**
 
-**params**: `string[]|..string|object`, pass a string array, object, or several strings
+**query**: `string[]|..string|object`, pass a string array, object, or several strings
 
 **Returns**: this
 
-#### URLBuildr.clear - reset the Objects options()
 
-Clears all the options
+#### URLBuildr.clear()
 
+reset the Object options()
 
 #### URLBuildr.toString()
 
