@@ -52,7 +52,7 @@ There are two ways to use this module
     }
   });
   ```
-  The above will turn into: https://thegreatsite.co:65132/accounts/users/54298/cart?showAllPurchases=true
+  When toString() is called the following string is returned: https://thegreatsite.co:65132/accounts/users/54298/cart?showAllPurchases=true
 
   Example producing the same url as above using the chaining method:
   ```javascript
@@ -62,6 +62,8 @@ There are two ways to use this module
            .param({userId: 54298});
   ```
 
+  The object can be reused by using set()
+  
 _____________________________________________
 ## API:
 

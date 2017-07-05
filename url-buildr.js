@@ -35,8 +35,8 @@ class URLBuildr {
     this.isBuilt = false;
     this.hasQuery = false;
 
-    this.queries = [];
-    this.params = [];
+    this.queries = {};
+    this.params = {};
     this.additions = [];
     this.options = defaultOptions;
 
@@ -62,8 +62,8 @@ class URLBuildr {
   _initArrays() {
     var options = this.options;
     this.additions = options.additions;
-    this.queries   = URLBuildr._accumulate(options.queries);
-    this.params    = URLBuildr._accumulate(options.params);
+    _.assign(this.queries, URLBuildr._accumulate(options.queries))
+    _.assign(this.params, URLBuildr._accumulate(options.params));
     return this;
   }
 
@@ -97,12 +97,13 @@ class URLBuildr {
   }
 
   /**
-  * @function URLBuildr._accumulate - create an array of subarrays (of length 2) from an object
+  * @function URLBuildr._accumulate - create an object from an iterable
   * @param {iterable} iterable - can be an object, array or variadric argument
   * @return {array[]}
   */
+
   static _accumulate(...iterable) {
-    var result = [];
+    var result = {};
     var firstArg = _.first(iterable);
     if (Array.isArray(firstArg)) {
       iterable = _.flatten(iterable);
@@ -112,12 +113,10 @@ class URLBuildr {
     let argType = typeof firstArg;
     if (argType === 'string' || Array.isArray(firstArg)) {
       for (let i = 0; i + 1 < iterable.length; i = i + 2) {
-        result.push([iterable[i], iterable[i + 1]]);
+        result[iterable[i]] = iterable[i + 1];
       }
     } else if (argType === 'object') {
-      _.each(_.keys(firstArg), (key) => {
-        result.push([key, firstArg[key]]);
-      });
+      _.assign(result, _.first(iterable));
     }
     return result;
   }
@@ -135,6 +134,11 @@ class URLBuildr {
     return this;
   }
 
+  _unbuild() {
+    this.isBuilt = false;
+    this.hasQuery = false;
+  }
+
  /** @function URLBuildr~_buildAdditions - add path segments to urlString */
   _buildAdditions() {
     _.each(this.additions, (addition) => {
@@ -143,11 +147,14 @@ class URLBuildr {
     return this;
   }
 
-  /** @function URLBuildr~_buildparams - fills in paraeters in urlString  */
+  /** @function URLBuildr~_buildparams - fills in parameters in urlString  */
   _buildParams() {
-    _.each(this.params, (pair) => {
-      const regex = new RegExp(':' + _.first(pair) + '(?=[/\0])')
-      this.urlString = this.urlString.replace(regex, _.last(pair));
+    var keys = _.keys(this.params);
+    _.each(keys, (key) => {
+      console.log();
+      const regex = new RegExp(':' + key + '(?!=w+)');
+      console.log(key, this.params[key], regex, 'match', this.urlString, this.urlString.match(regex));
+      this.urlString = this.urlString.replace(regex, this.params[key]);
     });
     return this;
   }
@@ -157,8 +164,9 @@ class URLBuildr {
   * @returns this
   */
   _buildQueries() {
-    _.each(this.queries, (query) => {
-      var queryString = _.first(query) + '=' + _.last(query);
+    var keys = _.keys(this.queries);
+    _.each(keys, (key) => {
+      var queryString = key + '=' + this.queries[key];
       if (!this.hasQuery) {
         this.urlString += '?';
         this.hasQuery = true;
@@ -203,6 +211,7 @@ class URLBuildr {
     _.each(str, (string) => {
       this.additions = this.additions.concat(URLBuildr._sanitizeString(string));
     });
+    this._unbuild();
     return this;
   }
 
@@ -211,7 +220,8 @@ class URLBuildr {
   * @param {iterable} params
   */
   param(...params) {
-    this.params = this.params.concat(URLBuildr._accumulate(...params));
+    _.assign(this.params, URLBuildr._accumulate(...params));
+    this._unbuild();
     return this;
   }
 
@@ -220,7 +230,9 @@ class URLBuildr {
   * @param {iterable} params
   */
   query(...queries) {
-    this.queries = this.queries.concat(URLBuildr._accumulate(...queries));
+    _.assign(this.queries, URLBuildr._accumulate(...queries));
+    this.isBuilt = false;
+    this._unbuild();
     return this;
   }
 
