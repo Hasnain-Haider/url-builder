@@ -31,6 +31,10 @@ class URLBuildr {
   - if an object is passed, the url is immediately built based on the initializer's values
 */
   constructor(initializer) {
+    this._init(initializer);
+  }
+
+  _init(initializer) {
     this.urlString = '';
     this.isBuilt = false;
     this.hasQuery = false;
@@ -39,7 +43,6 @@ class URLBuildr {
     this.params = {};
     this.additions = [];
     this.options = defaultOptions;
-
     let initype = typeof initializer;
     if (initype === 'string') {
       this.urlString = URLBuildr._sanitizeString(initializer);
@@ -151,9 +154,7 @@ class URLBuildr {
   _buildParams() {
     var keys = _.keys(this.params);
     _.each(keys, (key) => {
-      console.log();
       const regex = new RegExp(':' + key + '(?!=w+)');
-      console.log(key, this.params[key], regex, 'match', this.urlString, this.urlString.match(regex));
       this.urlString = this.urlString.replace(regex, this.params[key]);
     });
     return this;
@@ -243,6 +244,11 @@ class URLBuildr {
     })
   }
 
+  create(initializer) {
+    this._init(initializer);
+    return this;
+  }
+
   /**
   * @function URLBuildr#toString
   * @returns {string} urlString
@@ -252,4 +258,4 @@ class URLBuildr {
   }
 }
 
-module.exports = URLBuildr;
+module.exports =  URLBuildr;

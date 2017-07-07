@@ -17,6 +17,20 @@ ub = new UB({
 console.log(ub.toString());
 ub.set({ host: 'google.co.uk'});
 console.log(ub.toString());
+console.log("TEST CASE");
+console.log(ub.create({
+  prefix: 'http://',
+  pathPrefix: '/api/v3',
+  additions: ['item', ':userId', 'ger'],
+  port: 65132,
+  params: {
+    userId: 54298
+  },
+  host: 'TESTSITE1.co',
+  queries: {
+    showAllPurchases: true
+  }
+}).toString());
 ub.set({port: 3542});
 console.log(ub.toString());
 
