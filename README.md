@@ -22,17 +22,6 @@ There are two ways to use this module
     * **Some features are disabled in this method**
     * the URLs are generated with object chaining
 
-```javascript
-  options = {
-    prefix: (string),
-    pathPrefix: (string),
-    additions: (string|string[]),
-    port: (integer|string),
-    host: (string),
-    params: (string[]|object),    // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
-    queries: (string[]|object)    // (Same as above)
-  }
-```
   _____________________________________________
 
 ### Examples
@@ -63,7 +52,7 @@ There are two ways to use this module
   ```
 
   The object can be reused by using set()
-  
+
 _____________________________________________
 ## API:
 
@@ -77,6 +66,16 @@ Creates an object to create urls
 **initializer**: `object|string`, { options } OR the initial URL
 
 **Returns**: this
+
+#### this.options 
+
+    `options.prefix: {string} - at the very beginning of the url`
+    `pathPrefix: {string} - at the very beginning of the path`
+    `additions: {string|string[]} - additions to the path, added sequentially`
+    `port: {integer|string} - port of the url`
+    `host: {string} - url host`
+    `params: {string[]|object} - parameters and their values   // [key1,val1, key2,val2] OR {key1:val1, key2:val2}`
+    `queries: {string[]|object} - queries and the values        // (Same as above)`
 
 ### URLBuildr.set(opt)
 
