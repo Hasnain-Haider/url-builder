@@ -37,28 +37,19 @@ Creates an object to create urls
 *    **options.params** _{string[]|object}_ - parameters and their values // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
 *    **options.queries:** _{string[]|object}_ - queries and the values // (Same format as above)
 
-The url is made in the following format: `(prefix)(host)(:port)/(pathPrefix)(additions)`. 
-### URLBuildr.set(opt)
+The url is made in the following format: `(prefix)(host)(:port)/(pathPrefix)(additions)`.
 
-Assign a value to the given options field
+### URLBuildr.create(paths)
 
-**Parameters**
-
-**opts**: `object`, set fields in the options object of "this"
-
-**Returns**: this
-
-e.g. `ub.set({host: 3000})`
-
-### URLBuildr.setOptions(options)
-
-Overwrites the entire options object of "this"
+Returns a URLBuildr object, calls the constructor
 
 **Parameters**
 
-**options**: `object`, Object containing configurations for the url
+**initializer**: `object|string`, Creates a URLBuildr
 
 **Returns**: this
+
+e.g. `ub.create(myOptions).toString()`
 
 ### URLBuildr.add(paths)
 
@@ -112,6 +103,29 @@ reset the Object options()
 Returns the constructed URL
 
 **Returns**: `string`, urlString
+
+### URLBuildr.set(opt)
+
+Assign a value to the given options field
+
+**Parameters**
+
+**opts**: `object`, set fields in the options object of "this"
+
+**Returns**: this
+
+e.g. `ub.set({host: 3000})`
+
+### URLBuildr.setOptions(options)
+
+Overwrites the entire options object of "this"
+
+**Parameters**
+
+**options**: `object`, Object containing configurations for the url
+
+**Returns**: this
+
 
 _____________________________________________
 
