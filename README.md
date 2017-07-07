@@ -14,46 +14,6 @@ Quickly assemble routes and urls. Can be used for a variety of purposes like
 * etc.
 
 _____________________________________________
-
-There are two ways to use this module
-1. Instantiate the object with an 'options' object
-    * if this method is used, you **MUST pass an object with a defined host** to the constructor
-2. Instantiate with a string
-    * **Some features are disabled in this method**
-    * the URLs are generated with object chaining
-
-  _____________________________________________
-
-### Examples
-  Here's a quick example showing the first way
-  ```javascript
-  ub = new UB({
-    prefix: 'https://',
-    pathPrefix: '/accounts',
-    additions: ['users', ':userId', 'cart'],
-    port: 65132,
-    params: {
-      userId: 54298
-    },
-    host: 'thegreatsite.co',
-    queries: {
-      showAllPurchases: true
-    }
-  });
-  ```
-  When toString() is called the following string is returned: https://thegreatsite.co:65132/accounts/users/54298/cart?showAllPurchases=true
-
-  Example producing the same url as above using the chaining method:
-  ```javascript
-  ub = new UB('https://thegreatsite.co:65132')
-           .add('accounts', 'users', ':userId', 'cart')
-           .query({showAllPurchases: true})
-           .param({userId: 54298});
-  ```
-
-  The object can be reused by using set()
-
-_____________________________________________
 ## API:
 
 ### Class: URLBuildr
@@ -63,20 +23,21 @@ Creates an object to create urls
 
 **Parameters**
 
-**initializer**: `object|string`, { options } OR the initial URL
+**initializer**: `object|string`, { options } OR the initial URL. If an object is passed it sets `this.options`
 
 **Returns**: this
 
-#### this.options 
+#### this.options
 
-    `options.prefix: {string} - at the very beginning of the url`
-    `pathPrefix: {string} - at the very beginning of the path`
-    `additions: {string|string[]} - additions to the path, added sequentially`
-    `port: {integer|string} - port of the url`
-    `host: {string} - url host`
-    `params: {string[]|object} - parameters and their values   // [key1,val1, key2,val2] OR {key1:val1, key2:val2}`
-    `queries: {string[]|object} - queries and the values        // (Same as above)`
+*    **options.prefix** _{string}_ - at the very beginning of the url
+*    **options.pathPrefix** _{string}_ - at the very beginning of the path
+*    **options.additions** _{string|string[]}_ - additions to the path, added sequentially
+*    **options.port** _{integer|string}_ - port of the url
+*    **options.host** _{string}_ - url host
+*    **options.params** _{string[]|object}_ - parameters and their values // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
+*    **options.queries:** _{string[]|object}_ - queries and the values // (Same format as above)
 
+The url is made in the following format: `(prefix)(host)(:port)/(pathPrefix)(additions)`. 
 ### URLBuildr.set(opt)
 
 Assign a value to the given options field
@@ -151,3 +112,42 @@ reset the Object options()
 Returns the constructed URL
 
 **Returns**: `string`, urlString
+
+_____________________________________________
+
+### Examples
+
+There are two ways to use this module
+1. Instantiate the object with an 'options' object
+    * if this method is used, you **MUST pass an object with a defined host** to the constructor
+2. Instantiate with a string
+    * **Some features are disabled in this method**
+    * the URLs are generated with object chaining
+
+  Here's a quick example showing the first way
+  ```javascript
+  ub = new UB({
+    prefix: 'https://',
+    pathPrefix: '/accounts',
+    additions: ['users', ':userId', 'cart'],
+    port: 65132,
+    params: {
+      userId: 54298
+    },
+    host: 'thegreatsite.co',
+    queries: {
+      showAllPurchases: true
+    }
+  });
+  ```
+  When toString() is called the following string is returned: https://thegreatsite.co:65132/accounts/users/54298/cart?showAllPurchases=true
+
+  Example producing the same url as above using the chaining method:
+  ```javascript
+  ub = new UB('https://thegreatsite.co:65132')
+           .add('accounts', 'users', ':userId', 'cart')
+           .query({showAllPurchases: true})
+           .param({userId: 54298});
+  ```
+
+  The object can be reused by using set()
