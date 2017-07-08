@@ -8,7 +8,7 @@ An NPM package:
 
 Quickly assemble routes and urls. Can be used for a variety of purposes like
 
-* Route Generation
+* Route Generation/Modularization
 * API testing
 * Webcrawling/scraping
 * etc.
@@ -31,16 +31,17 @@ Creates an object to create urls
 
 *    **options.prefix** _{string}_ - at the very beginning of the url
 *    **options.pathPrefix** _{string}_ - at the very beginning of the path
-*    **options.additions** _{string|string[]}_ - additions to the path, added sequentially
+*    **options.additions** _{string[]}_ - additions to the path, added sequentially
 *    **options.port** _{integer|string}_ - port of the url
 *    **options.host** _{string}_ - url host
 *    **options.params** _{string[]|object}_ - parameters and their values // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
 *    **options.queries:** _{string[]|object}_ - queries and the values // (Same format as above)
 
-The url is made in the following format: `(prefix)(host)(:port)/(pathPrefix)(additions)`.
+The url is made in the following format: `(prefix)(host)(:port)(pathPrefix)(additions)`.
 
 ### URLBuildr.create(initializer)
 
+The preferred method of creating strings.
 Returns a URLBuildr object, calls the constructor
 
 **Parameters**
@@ -49,7 +50,7 @@ Returns a URLBuildr object, calls the constructor
 
 **Returns**: this
 
-e.g. `ub.create(myOptions).toString()`
+e.g. `var myUrl = ub.create(myOptions).toString()`
 
 ### URLBuildr.add(paths)
 
@@ -138,11 +139,13 @@ There are two ways to use this module
     * **Some features are disabled in this method**
     * the URLs are generated with object chaining
 
+  _The leading and following forward slash(es) are ignored_ in most cases.
+
   Here's a quick example showing the first way
   ```javascript
-  ub = new UB({
+  urlObj = ub.create({
     prefix: 'https://',
-    pathPrefix: '/accounts',
+    pathPrefix: 'accounts',
     additions: ['users', ':userId', 'cart'],
     port: 65132,
     params: {
@@ -158,10 +161,8 @@ There are two ways to use this module
 
   Example producing the same url as above using the chaining method:
   ```javascript
-  ub = new UB('https://thegreatsite.co:65132')
+  urlObj = ub.create('https://thegreatsite.co:65132')
            .add('accounts', 'users', ':userId', 'cart')
            .query({showAllPurchases: true})
            .param({userId: 54298});
   ```
-
-  The object can be reused by using set()
