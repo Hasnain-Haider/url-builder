@@ -39,7 +39,7 @@ Creates an object to create urls
 
 The url is made in the following format: `(prefix)(host)(:port)/(pathPrefix)(additions)`.
 
-### URLBuildr.create(paths)
+### URLBuildr.create(initializer)
 
 Returns a URLBuildr object, calls the constructor
 
