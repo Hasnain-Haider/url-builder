@@ -55,8 +55,7 @@ class URLBuildr {
 
   /** @function URLBuildr~_initOptions - assemble the url using the objects properties */
   _initOptions(_options) {
-    var prePath = this.options.pathPrefix || {}
-    this.options = _.defaults(_options, defaultOptions);
+    this.options = _.assign({}, defaultOptions, _options);
     this.options.pathPrefix = URLBuildr._sanitizeString(this.options.pathPrefix);
     this._initArrays();
   }
@@ -189,7 +188,7 @@ class URLBuildr {
     _.each(_.keys(opts), (option) => {
       this.options[option] = opts[option];
     });
-    this.isBuilt = false;
+    this._unbuild();
     return this;
    }
 
@@ -198,11 +197,6 @@ class URLBuildr {
   * @param {object} options
   * @returns this
   */
-  setOptions(options) {
-    this.options = options;
-    this.isBuilt = false;
-    return this;
-  }
 
   /**
   * @function URLBuildr#add - fills in parameters
@@ -239,6 +233,7 @@ class URLBuildr {
 
   /** @function URLBuildr#clear - reset the Objects options */
   clear() {
+    this._unbuild();
     _.each(defaultOptions, opt => {
       this.options[opt] = defaultOptions[opt];
     })
@@ -258,4 +253,4 @@ class URLBuildr {
   }
 }
 
-module.exports =  URLBuildr;
+module.exports = new URLBuildr();

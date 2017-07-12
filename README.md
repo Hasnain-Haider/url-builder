@@ -19,27 +19,7 @@ _____________________________________________
 ### Class: URLBuildr
 Creates an object to create urls
 
-### URLBuildr.constructor(initializer)
-
-**Parameters**
-
-**initializer**: `object|string`, { options } OR the initial URL. If an object is passed it sets `this.options`
-
-**Returns**: this
-
-#### this.options
-
-*    **options.prefix** _{string}_ - at the very beginning of the url
-*    **options.pathPrefix** _{string}_ - at the very beginning of the path
-*    **options.additions** _{string[]}_ - additions to the path, added sequentially
-*    **options.port** _{integer|string}_ - port of the url
-*    **options.host** _{string}_ - url host
-*    **options.params** _{string[]|object}_ - parameters and their values // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
-*    **options.queries:** _{string[]|object}_ - queries and the values // (Same format as above)
-
-The url is made in the following format: `(prefix)(host)(:port)(pathPrefix)(additions)`.
-
-### URLBuildr.create(initializer)
+### URLBuildr.create(options)
 
 The preferred method of creating strings.
 Returns a URLBuildr object, calls the constructor
@@ -52,6 +32,21 @@ Returns a URLBuildr object, calls the constructor
 
 e.g. `var myUrl = ub.create(myOptions).toString()`
 
+#### {options}
+
+*    **options.prefix** _{string}_ - at the very beginning of the url
+*    **options.pathPrefix** _{string}_ - at the very beginning of the path
+*    **options.additions** _{string[]}_ - additions to the path, added sequentially
+*    **options.port** _{integer|string}_ - port of the url
+*    **options.host** _{string}_ - url host
+*    **options.params** _{string[]|object}_ - parameters and their values // [key1,val1, key2,val2] OR {key1:val1, key2:val2}
+*    **options.queries:** _{string[]|object}_ - queries and the values // (Same format as above)
+
+The url is made in the following format:
+ `(prefix)(host)(:port)(pathPrefix)(additions)`.
+
+
+
 ### URLBuildr.add(paths)
 
 Adds to url path, after the prefix, host, port and pathPrefix
@@ -62,7 +57,7 @@ Adds to url path, after the prefix, host, port and pathPrefix
 
 **Returns**: this
 
-e.g. `ub.add('accounts', 'users')` || `ub.add(['accounts', 'users'])`
+e.g. `ub.add('accounts', 'users')` or `ub.add(['accounts', 'users'])`
 
 ### URLBuildr.param(params)
 
@@ -143,7 +138,8 @@ There are two ways to use this module
 
   Here's a quick example showing the first way
   ```javascript
-  urlObj = ub.create({
+  var ub = require('url-buildr');
+  var urlObj = ub.create({
     prefix: 'https://',
     pathPrefix: 'accounts',
     additions: ['users', ':userId', 'cart'],
@@ -161,7 +157,7 @@ There are two ways to use this module
 
   Example producing the same url as above using the chaining method:
   ```javascript
-  urlObj = ub.create('https://thegreatsite.co:65132')
+  var urlObj = ub.create('https://thegreatsite.co:65132')
            .add('accounts', 'users', ':userId', 'cart')
            .query({showAllPurchases: true})
            .param({userId: 54298});
